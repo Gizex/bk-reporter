@@ -1,5 +1,5 @@
 # Используем официальный образ Python для запуска Flask
-FROM python:3.8-slim-buster
+FROM python:3.11-slim-buster
 
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app

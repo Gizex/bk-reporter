@@ -1,4 +1,6 @@
 *.csv
 *.txs
 *.xlsx
+*.log
 __pycache__
+uploads

@@ -1,101 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Обработчик отчётов vCloud Director</title>
-    <style>:root {
-        --primary-color: #3498db;
-        --text-color: #34495e;
-    }
-    
-    body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #ecf0f1;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        color: var(--text-color);
-        transition: background-color 0.5s ease;
-    }
-    
-    .container {
-        max-width: 400px;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        animation: slideIn .5s forwards;
-    }
-    
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-    
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    h1 {
-        text-align: center;
-        margin-top: 0;
-    }
-    
-    .description {
-        color: var(--text-color);
-        margin-bottom: 2rem;
-        line-height: 1.5;
-    }
-    
-    form {
-        margin-top: 20px;
-        text-align: center;
-    }
-    
-    .file-input-label {
-        display: inline-block;
-        background-color: var(--primary-color);
-        color: #fff;
-        border-radius: 5px;
-        padding: 10px 20px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    
-    .file-input-label:hover {
-        background-color: #2980b9;
-    }
-    
-    input[type="file"] {
-        display: none;
-    }
-    
-    .submit-button {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: var(--primary-color);
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    
-    .submit-button:hover {
-        background-color: #2980b9;
-    }
-    </style>
+    <title>Обработчик отчётов vCloud Director - Burger King</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Обработчик отчётов vCloud Director</h1>
+        <h1></h1>
         <p class="description">
-            Добро пожаловать в обработчик отчётов vCloud Director. Этот инструмент был разработан 
+            Добро пожаловать в обработчик отчётов vCloud Director для Burger King. Этот инструмент был разработан 
             для анализа и обработки отчётов об использовании ресурсов виртуальных машин в vCloud Director. 
             Просто загрузите ваш CSV-файл с данными, и мы автоматически обработаем информацию, создадим 
             сводную таблицу по проектам и вернём вам детализированный отчёт в формате Excel. 
@@ -111,6 +24,9 @@
                 Загрузить и обработать
             </button>
         </form>
+    </div>
+    <div class="footer">
+        Created by Gizex
     </div>
 </body>
 </html>

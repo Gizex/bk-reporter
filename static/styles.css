@@ -1,0 +1,71 @@
+:root {
+    --primary-color: #64B5F6;
+    --secondary-color: #E3F2FD;
+    --text-color: #212121;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--secondary-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 4px;
+    background: #FFFFFF;
+}
+
+h1 {
+    color: var(--text-color);
+    text-align: center;
+    margin-top: 0;
+    background-image: url("https://burgerkingrus.ru/_nuxt/img/logo.de57e07.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100px;
+}
+
+.description {
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+form {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.file-input-label, .submit-button {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+.file-input-label:hover, .submit-button:hover {
+    background-color: #42A5F5;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.footer {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    color: var(--primary-color);
+    font-size: 0.8em;
+}

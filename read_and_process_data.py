@@ -1,4 +1,8 @@
+import logging
 import csv
+
+# Настройка логирования
+logging.basicConfig(filename='app.log', level=logging.INFO)
 
 def read_and_process_data(filename):
     """ 
@@ -11,6 +15,8 @@ def read_and_process_data(filename):
         reader = csv.reader(csv_in, delimiter=',')
         for row in reader:
             data.append(row)  # Save row as list
+
+    logging.info(f"Прочитано {len(data)} строк из файла: {filename}")
 
     # Фильтрация и переименование столбцов
     required_cols = ['containerName', 'Name', 'Network Name', 'Number of CPUs', 'Memory MB', 'Total Storage Allocated MB', 'Status']
@@ -45,5 +51,7 @@ def read_and_process_data(filename):
 
     # Sort filtered data by 'Project'
     filtered_data.sort(key=lambda x: x[0])
+
+    logging.info(f"Обработано {len(filtered_data)} строк")
 
     return filtered_data, new_cols

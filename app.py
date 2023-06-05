@@ -1,3 +1,4 @@
+import logging
 from flask import Flask, request, render_template, send_file
 import datetime
 import pandas as pd
@@ -9,6 +10,8 @@ app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+# Настройка логирования
+logging.basicConfig(filename='app.log', level=logging.INFO)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -23,6 +26,7 @@ def index():
         # Сохранение загруженного файла на сервере
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(file_path)
+        logging.info(f"Загружен файл: {file_path}")
 
         # Чтение и обработка данных из загруженного CSV файла
         data, new_cols = read_and_process_data(file_path)
@@ -52,6 +56,7 @@ def index():
 
         # Удаление загруженного файла после обработки
         os.remove(file_path)
+        logging.info(f"Удален файл: {file_path}")
 
         # Отправка файла для скачивания
         return send_file(result_file_path, as_attachment=True)

@@ -42,6 +42,13 @@ def index():
                                   values=['CPUs', 'Memory MB', 'Storage MB'],
                                   aggfunc='sum')
 
+        # Создание сводной таблицы с количеством ВМ
+        vm_count_df = df.groupby('Project')['Name'].count().reset_index()
+        vm_count_df.rename(columns={'Name': 'VM Count'}, inplace=True)
+
+        # Объединение сводной таблицы и таблицы с количеством ВМ
+        pivot_df = pd.merge(pivot_df, vm_count_df, on='Project', how='left')
+
         # Получение текущей даты
         current_date = datetime.datetime.now().strftime("%Y-%m-%d")
 

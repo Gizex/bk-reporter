@@ -1,5 +1,5 @@
 import logging
-from flask import Flask, request, render_template, send_file
+from flask import Flask, request, render_template, send_file, after_this_request
 import datetime
 import pandas as pd
 from read_and_process_data import read_and_process_data
@@ -65,6 +65,16 @@ def index():
         logging.info(f"Удален файл: {file_path}")
 
         # Отправка файла для скачивания
+        @after_this_request
+        def remove_file(response):
+            try:
+                os.remove(result_file_path)
+                logging.info(f"Удален файл: {result_file_path}")
+            except Exception as error:
+                logging.error("Error removing file %s. Error: %s" %(result_file_path, error))
+            
+            return response
+
         return send_file(result_file_path, as_attachment=True)
 
     return render_template('index.html')

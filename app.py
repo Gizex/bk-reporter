@@ -11,8 +11,12 @@ UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Настройка логирования
-logging.basicConfig(filename='app.log', level=logging.INFO)
-
+logging.basicConfig(
+    filename='app.log', 
+    level=logging.INFO, 
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', 
+    datefmt='%d-%b-%y %H:%M:%S'
+)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':

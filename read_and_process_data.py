@@ -2,8 +2,12 @@ import logging
 import csv
 
 # Настройка логирования
-logging.basicConfig(filename='app.log', level=logging.INFO)
-
+logging.basicConfig(
+    filename='app.log', 
+    level=logging.INFO, 
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', 
+    datefmt='%d-%b-%y %H:%M:%S'
+)
 def read_and_process_data(filename):
     """ 
     Функция для чтения и обработки CSV файла.

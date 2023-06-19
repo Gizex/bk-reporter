@@ -38,31 +38,39 @@ def read_and_process_data(filename):
         if new_row[storage_index]:
             new_row[storage_index] = float(new_row[storage_index]) / 1024
             
-        parts = new_row[1].split('-')
-        if len(parts) >= 3:
-            if parts[1] in ['stage', 'preprod', 'int']:
-                parts[1] = 'dev'
-            if parts[1] in ['qa'] and parts[2] in ['mpback']:
-                parts[1] = 'prod' 
-                parts[2] = 'infra'
-            if parts[2] in ['qa', 'monitoring', 'test', 'template', 'ci', 'stpage', 'cmdb']:
-                parts[2] = 'infra'
-            if parts[2] in ['ml', 'superset', 'recsys']:
-                parts[2] = 'analytics'
-            if parts[2] in ['stoplist', 'userv', 'static', 'cadmin']:
-                parts[2] = 'mpback'
-            if parts[2] in ['ksk','fariton']:
-                parts[2] = 'kiosk'
-            project = f"{parts[1].upper()}-{parts[2].upper()}"
+        if new_row[1] == 'UserGate2' or new_row[1] == 'Usergate1':
+            project = 'PROD-INFRA'
         else:
-            project = "UNKNOWN"
-        
-        # Проверка условия для DEV-DEVSECOPS или PROD-DEVSECOPS
-        if 'DEVSECOPS' in new_row[0]:
-            if 'dev' in parts[1].lower():
-                project = 'DEV-DEVSECOPS'
-            elif 'prod' in parts[1].lower():
-                project = 'PROD-DEVSECOPS'
+            parts = new_row[1].split('-')
+            if len(parts) >= 3:
+                if parts[1] in ['stage', 'preprod', 'int']:
+                    parts[1] = 'dev'
+                if parts[1] in ['qa'] and parts[2] in ['mpback']:
+                    parts[1] = 'prod' 
+                    parts[2] = 'infra'
+                if parts[2] in ['qa', 'monitoring', 'test', 'template', 'ci', 'stpage', 'cmdb']:
+                    parts[2] = 'infra'
+                if parts[2] in ['ml', 'superset', 'recsys']:
+                    parts[2] = 'analytics'
+                if parts[2] in ['stoplist', 'userv', 'static', 'cadmin']:
+                    parts[2] = 'mpback'
+                if parts[2] in ['ksk','fariton']:
+                    parts[2] = 'kiosk'
+                project = f"{parts[1].upper()}-{parts[2].upper()}"
+            else:
+                project = "UNKNOWN"
+
+            # Проверка условия для DEV-DEVSECOPS или PROD-DEVSECOPS
+            if 'DEVSECOPS' in new_row[0]:
+                if 'dev' in parts[1].lower():
+                    project = 'DEV-DEVSECOPS'
+                elif 'prod' in parts[1].lower():
+                    project = 'PROD-DEVSECOPS'
+            if 'DEVSECOPS' in new_row[2]:
+                if 'dev' in parts[1].lower():
+                    project = 'DEV-DEVSECOPS'
+                elif 'prod' in parts[1].lower():
+                    project = 'PROD-DEVSECOPS'
 
         new_row.insert(0, project)
         filtered_data.append(new_row)

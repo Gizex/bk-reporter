@@ -35,11 +35,10 @@ def index():
         df = pd.DataFrame(data, columns=new_cols)
 
         # Убеждаемся, что числовые колонки обрабатываются как таковые
-        df[['CPUs', 'Memory MB', 'Storage MB']] = df[['CPUs', 'Memory MB', 'Storage MB']].apply(pd.to_numeric)
-
+        df[['CPUs', 'Memory GB', 'Storage GB']] = df[['CPUs', 'Memory GB', 'Storage GB']].apply(pd.to_numeric)
         # Создание сводной таблицы
         pivot_df = df.pivot_table(index='Project',
-                                  values=['CPUs', 'Memory MB', 'Storage MB'],
+                                  values=['CPUs', 'Memory GB', 'Storage GB'],
                                   aggfunc='sum')
 
         # Создание сводной таблицы с количеством ВМ

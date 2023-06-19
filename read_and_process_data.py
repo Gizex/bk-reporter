@@ -20,8 +20,7 @@ def read_and_process_data(filename):
 
     # Фильтрация и переименование столбцов
     required_cols = ['containerName', 'Name', 'Network Name', 'Number of CPUs', 'Memory MB', 'Total Storage Allocated MB', 'Status']
-    new_cols = ['Project', 'containerName', 'Name', 'Network Name', 'CPUs', 'Memory MB', 'Storage MB', 'Status']
-
+    new_cols = ['Project', 'containerName', 'Name', 'Network Name', 'CPUs', 'Memory GB', 'Storage GB', 'Status']
     filtered_data = []  # To store filtered data
 
     headers = data[0]  # get the headers from first line
@@ -29,6 +28,16 @@ def read_and_process_data(filename):
 
     for row in data[1:]:
         new_row = [row[index] for index in indices]
+        
+        memory_index = required_cols.index('Memory MB')
+        storage_index = required_cols.index('Total Storage Allocated MB')
+        
+        # Проверка на наличие данных в столбцах перед преобразованием
+        if new_row[memory_index]:
+            new_row[memory_index] = float(new_row[memory_index]) / 1024
+        if new_row[storage_index]:
+            new_row[storage_index] = float(new_row[storage_index]) / 1024
+            
         parts = new_row[1].split('-')
         if len(parts) >= 3:
             if parts[1] in ['stage', 'preprod', 'int']:

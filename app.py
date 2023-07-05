@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, send_file, after_this_request
 import datetime
 import pandas as pd
 from read_and_process_data import read_and_process_data
+from read_and_process_data_v2 import read_and_process_data_v2  # Импортируйте второй способ обработки данных
 import os
 
 app = Flask(__name__)
@@ -17,6 +18,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', 
     datefmt='%d-%b-%y %H:%M:%S'
 )
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -32,18 +34,31 @@ def index():
         file.save(file_path)
         logging.info(f"Загружен файл: {file_path}")
 
-        # Чтение и обработка данных из загруженного CSV файла
-        data, new_cols = read_and_process_data(file_path)
+        # Получение значения переключателя для выбора способа обработки данных
+        processing_option = request.form.get('processing_option')
+
+        if processing_option == 'option1':
+            # Способ обработки данных - первый способ
+            data, new_cols = read_and_process_data(file_path)
+        elif processing_option == 'option2':
+            # Способ обработки данных - второй способ
+            data, new_cols = read_and_process_data_v2(file_path)
+        else:
+            # Если переключатель не выбран, используйте первый способ по умолчанию
+            data, new_cols = read_and_process_data(file_path)
 
         # Преобразование обработанных данных в DataFrame
         df = pd.DataFrame(data, columns=new_cols)
 
         # Убеждаемся, что числовые колонки обрабатываются как таковые
         df[['CPUs', 'Memory GB', 'Storage GB']] = df[['CPUs', 'Memory GB', 'Storage GB']].apply(pd.to_numeric)
+
         # Создание сводной таблицы
-        pivot_df = df.pivot_table(index='Project',
-                                  values=['CPUs', 'Memory GB', 'Storage GB'],
-                                  aggfunc='sum')
+        pivot_df = df.pivot_table(
+            index='Project',
+            values=['CPUs', 'Memory GB', 'Storage GB'],
+            aggfunc='sum'
+        )
 
         # Создание сводной таблицы с количеством ВМ
         vm_count_df = df.groupby('Project')['Name'].count().reset_index()
@@ -59,7 +74,11 @@ def index():
         first_word = data[3][2].split('-')[0]
 
         # Сохранение DataFrame и сводной таблицы в excel файл с двумя листами
-        result_file_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{first_word} Отчет о потреблении ресурсов {current_date}.xlsx")
+        result_file_path = os.path.join(
+            app.config['UPLOAD_FOLDER'], 
+            f"{first_word} Отчет о потреблении ресурсов {current_date}.xlsx"
+        )
+
         with pd.ExcelWriter(result_file_path, engine='openpyxl') as writer:
             df.to_excel(writer, sheet_name='Original Data', index=False)
             pivot_df.to_excel(writer, sheet_name='Pivot Table')

@@ -1,6 +1,6 @@
 :root {
-    --primary-color: #64B5F6;
-    --secondary-color: #E3F2FD;
+    --primary-color: #FF9800;
+    --secondary-color: #FFF3E0;
     --text-color: #212121;
 }
 
@@ -12,7 +12,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .container {
@@ -20,6 +20,7 @@ body {
     padding: 30px;
     border-radius: 4px;
     background: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 h1 {
@@ -30,6 +31,7 @@ h1 {
     background-repeat: no-repeat;
     background-position: center;
     height: 100px;
+    background-size: 20%;
 }
 
 .description {
@@ -51,15 +53,22 @@ form {
     border-radius: 4px;
     padding: 10px 20px;
     cursor: pointer;
-    transition: background-color .2s ease;
+    transition: background-color 0.2s ease;
 }
 
 .file-input-label:hover, .submit-button:hover {
-    background-color: #42A5F5;
+    background-color: #FFB74D;
 }
 
 input[type="file"] {
     display: none;
+}
+
+h3 {
+    color: var(--primary-color);
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 .footer {
@@ -68,4 +77,7 @@ input[type="file"] {
     bottom: 20px;
     color: var(--primary-color);
     font-size: 0.8em;
+}
+.file-selected {
+    background-color: rgb(123, 240, 123) !important;
 }

@@ -10,8 +10,8 @@
         <p class="description">
             Добро пожаловать в обработчик отчётов vCloud Director для Burger King. Этот инструмент был разработан 
             для анализа и обработки отчётов об использовании ресурсов виртуальных машин в vCloud Director. 
-            Просто загрузите ваш CSV-файл с данными, и мы автоматически обработаем информацию, создадим 
-            сводную таблицу по проектам и вернём вам детализированный отчёт в формате Excel. 
+            Просто загрузите ваш CSV-файл с данными, выберите способ обработки данных и мы автоматически обработаем информацию, 
+            создадим сводную таблицу по проектам и вернём вам детализированный отчёт в формате Excel. 
             Это упрощает отслеживание использования ресурсов и помогает оптимизировать вашу инфраструктуру.
         </p>
         <form method="POST" action="/" enctype="multipart/form-data">
@@ -19,8 +19,17 @@
                 Выберите файл для загрузки
                 <input type="file" id="file" name="file" accept=".csv">
             </label>
+            <h3>Способ определения проекта</h3>
+            <label for="option1">
+                <input type="radio" id="option1" name="processing_option" value="option1" >
+                По названию ВМ
+            </label>
+            <label for="option2">
+                <input type="radio" id="option2" name="processing_option" value="option2" checked>
+                По vApp NEW!!!
+            </label>
             <br><br>
-            <button class="submit-button" type="submit">
+            <button class="submit-button" type="submit" id="upload-button">
                 Загрузить и обработать
             </button>
         </form>
@@ -28,5 +37,29 @@
     <div class="footer">
         Created by Gizex
     </div>
-</body>
-</html>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Находим элемент кнопки загрузки и обработки
+            var uploadButton = document.getElementById("upload-button");
+    
+            // Назначаем обработчик события "change" на элемент загрузки файла
+            var fileInput = document.getElementById("file");
+            fileInput.addEventListener("change", function() {
+                // Проверяем, есть ли выбранный файл
+                if (fileInput.value) {
+                    // Если файл выбран, добавляем класс "file-selected" к кнопке
+                    uploadButton.classList.add("file-selected");
+                    // Изменяем текст кнопки на название выбранного файла
+                    uploadButton.innerText = "Файл выбран: " + fileInput.files[0].name;
+                } else {
+                    // Если файл не выбран, удаляем класс "file-selected" из кнопки
+                    uploadButton.classList.remove("file-selected");
+                    // Возвращаем исходный текст кнопки
+                    uploadButton.innerText = "Загрузить и обработать";
+                }
+            });
+        });
+    </script>
+    
+</body

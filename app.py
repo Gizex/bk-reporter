@@ -3,7 +3,7 @@ from flask import Flask, request, render_template, send_file, after_this_request
 import datetime
 import pandas as pd
 from read_and_process_data import read_and_process_data
-from read_and_process_data_v2 import read_and_process_data_v2  # Импортируйте второй способ обработки данных
+from read_and_process_data_v2 import read_and_process_data_v2
 import os
 
 app = Flask(__name__)
@@ -38,14 +38,14 @@ def index():
         processing_option = request.form.get('processing_option')
 
         if processing_option == 'option1':
-            # Способ обработки данных - первый способ
+            # Способ обработки данных - сортировка по vmName
             data, new_cols = read_and_process_data(file_path)
         elif processing_option == 'option2':
-            # Способ обработки данных - второй способ
+            # Способ обработки данных - сортировка по vApps
             data, new_cols = read_and_process_data_v2(file_path)
         else:
             # Если переключатель не выбран, используйте первый способ по умолчанию
-            data, new_cols = read_and_process_data(file_path)
+            data, new_cols = read_and_process_data_v2(file_path)
 
         # Преобразование обработанных данных в DataFrame
         df = pd.DataFrame(data, columns=new_cols)
